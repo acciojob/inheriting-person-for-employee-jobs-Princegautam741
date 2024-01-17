@@ -1,5 +1,13 @@
 // Person constructor function
 function Person(name, age) {
+  if (typeof name !== 'string' || name.trim() === '') {
+    throw new Error('Name must be a non-empty string');
+  }
+
+  if (typeof age !== 'number' || age < 0) {
+    throw new Error('Age must be a non-negative number');
+  }
+
   this.name = name;
   this.age = age;
 }
@@ -13,6 +21,11 @@ Person.prototype.greet = function () {
 function Employee(name, age, jobTitle) {
   // Call the Person constructor to set name and age
   Person.call(this, name, age);
+
+  if (typeof jobTitle !== 'string' || jobTitle.trim() === '') {
+    throw new Error('Job title must be a non-empty string');
+  }
+
   this.jobTitle = jobTitle;
 }
 
@@ -24,11 +37,3 @@ Employee.prototype.constructor = Employee;
 Employee.prototype.jobGreet = function () {
   console.log(`Hello, my name is ${this.name}, I am ${this.age} years old, and my job title is ${this.jobTitle}.`);
 };
-
-// Example usage
-const person1 = new Person("John", 25);
-person1.greet(); // Output: Hello, my name is John, I am 25 years old.
-
-const employee1 = new Employee("Alice", 30, "Software Engineer");
-employee1.greet(); // Output: Hello, my name is Alice, I am 30 years old.
-employee1.jobGreet(); // Output: Hello, my name is Alice, I am 30 years old, and my job title is Software Engineer.
